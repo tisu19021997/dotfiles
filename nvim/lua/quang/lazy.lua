@@ -121,7 +121,10 @@ require("lazy").setup({
     dependencies = {
       { "williamboman/mason.nvim", opts = {} },
       { "williamboman/mason-lspconfig.nvim", opts = {
-          ensure_installed = { "lua_ls", "pyright", "ts_ls", "bashls", "gopls", "rust_analyzer" },
+          -- Servers Mason will install on first open. Add "gopls" once you
+          -- `brew install go` (gopls is built via `go install`, no prebuilt
+          -- binary). rust_analyzer ships as a prebuilt binary so it's fine.
+          ensure_installed = { "lua_ls", "pyright", "ts_ls", "bashls", "rust_analyzer" },
           automatic_enable = true,
       } },
     },
