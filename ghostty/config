@@ -1,0 +1,88 @@
+# ─── Ghostty config ──────────────────────────────────────────────────────────
+# Flexoki Dark — palette from https://github.com/kepano/flexoki
+
+font-family = "JetBrainsMono Nerd Font"
+font-size = 14
+font-feature = -calt
+font-feature = -liga
+font-thicken = true
+
+# Generous line height for readability
+adjust-cell-height = 15%
+
+# ─── Flexoki Dark palette ────────────────────────────────────────────────────
+background = 100F0F
+foreground = CECDC3
+cursor-color = CECDC3
+selection-background = 282726
+selection-foreground = CECDC3
+
+# 0-7 normal / 8-15 bright
+palette = 0=#1C1B1A
+palette = 1=#D14D41
+palette = 2=#879A39
+palette = 3=#D0A215
+palette = 4=#4385BE
+palette = 5=#CE5D97
+palette = 6=#3AA99F
+palette = 7=#CECDC3
+palette = 8=#575653
+palette = 9=#AF3029
+palette = 10=#66800B
+palette = 11=#AD8301
+palette = 12=#205EA6
+palette = 13=#A02F6F
+palette = 14=#24837B
+palette = 15=#FFFCF0
+
+# ─── Window chrome ───────────────────────────────────────────────────────────
+window-padding-x = 12
+window-padding-y = 10
+window-padding-balance = true
+window-decoration = true
+window-theme = dark
+macos-titlebar-style = transparent
+# Treat ⌥ as Alt so option+letter sends ESC+letter (vim friendly)
+macos-option-as-alt = left
+
+# ─── Cursor ──────────────────────────────────────────────────────────────────
+cursor-style = block
+cursor-style-blink = false
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# ─── Behaviour ───────────────────────────────────────────────────────────────
+copy-on-select = clipboard
+mouse-hide-while-typing = true
+confirm-close-surface = false
+quit-after-last-window-closed = true
+scrollback-limit = 100000
+clipboard-read = allow
+clipboard-write = allow
+
+# ─── Keybindings ─────────────────────────────────────────────────────────────
+# Tabs (Cmd+T new, Cmd+1..9 jump are default — restated for clarity)
+keybind = super+t=new_tab
+keybind = super+w=close_surface
+keybind = super+shift+left_bracket=previous_tab
+keybind = super+shift+right_bracket=next_tab
+
+# Splits (we mostly do this inside tmux, but available natively too)
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+
+# Cmd+Shift+Arrow → send tmux prefix (Ctrl-b = 0x02) + h/j/k/l
+# tmux config binds these to select-pane -L/D/U/R
+keybind = super+shift+left=text:\x02h
+keybind = super+shift+down=text:\x02j
+keybind = super+shift+up=text:\x02k
+keybind = super+shift+right=text:\x02l
+
+# Quick reload
+keybind = super+shift+r=reload_config
+
+# Font sizing
+keybind = super+plus=increase_font_size:1
+keybind = super+equal=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = super+zero=reset_font_size

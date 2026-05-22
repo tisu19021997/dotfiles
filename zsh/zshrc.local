@@ -1,0 +1,86 @@
+# ─── zshrc.local — sourced from ~/.zshrc by install.sh ───────────────────────
+# Mouseless / Claude-friendly additions.
+
+# ─── PATH ────────────────────────────────────────────────────────────────────
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:$PATH"
+
+# ─── Editor ──────────────────────────────────────────────────────────────────
+export EDITOR='nvim'
+export VISUAL='nvim'
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+
+# ─── ls / cat / find replacements ────────────────────────────────────────────
+if command -v eza >/dev/null; then
+  alias ls='eza --group-directories-first --icons'
+  alias ll='eza -la --git --group-directories-first --icons'
+  alias lt='eza --tree --level=2 --icons'
+  alias la='eza -a --icons'
+fi
+command -v bat >/dev/null && alias cat='bat --paging=never --style=plain'
+
+# ─── zoxide (smarter cd) ─────────────────────────────────────────────────────
+command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"
+
+# ─── fzf ─────────────────────────────────────────────────────────────────────
+if command -v fzf >/dev/null; then
+  source <(fzf --zsh) 2>/dev/null
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+  export FZF_DEFAULT_OPTS='
+    --height 60% --layout=reverse --border=rounded
+    --color=bg+:#282726,bg:#100F0F,spinner:#3AA99F,hl:#D0A215
+    --color=fg:#CECDC3,header:#3AA99F,info:#878580,pointer:#D14D41
+    --color=marker:#879A39,fg+:#CECDC3,prompt:#4385BE,hl+:#D14D41
+  '
+fi
+
+# ─── Git / tmux / claude shortcuts ───────────────────────────────────────────
+alias g='git'
+alias gs='git status -sb'
+alias gd='git diff'
+alias gl='git log --oneline --graph --decorate -20'
+alias lg='lazygit'
+
+alias t='tmux'
+alias ta='tmux attach -t'
+alias tl='tmux ls'
+alias tn='tmux new -s'
+alias tk='tmux kill-session -t'
+
+# Quick scratch tmux session per-project (uses dir name)
+work() {
+  local name="${1:-$(basename "$PWD" | tr . _)}"
+  tmux new-session -A -s "$name"
+}
+
+# Multi-claude: open a new tmux window in cwd running claude
+alias cl='claude'
+claude-here() { tmux new-window -c "#{pane_current_path}" "claude" ; }
+alias clh='claude-here'
+
+# ─── ripgrep config ──────────────────────────────────────────────────────────
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
+
+# ─── Vi mode in zsh ──────────────────────────────────────────────────────────
+bindkey -v
+export KEYTIMEOUT=1
+# Keep useful emacs bindings inside vi mode
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey '^R' history-incremental-search-backward
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
+
+# Show vi mode in prompt (right side, minimal)
+function zle-keymap-select { zle reset-prompt }
+zle -N zle-keymap-select
+
+# ─── Quick edit dotfiles ─────────────────────────────────────────────────────
+export DOTFILES="$HOME/dotfiles"
+alias dot="cd $DOTFILES && nvim"
+
+# ─── Pull-in local-only overrides (untracked) ────────────────────────────────
+[[ -f ~/.zshrc.private ]] && source ~/.zshrc.private
