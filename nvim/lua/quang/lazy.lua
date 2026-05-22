@@ -96,6 +96,7 @@ require("lazy").setup({
   -- ─── Treesitter ───────────────────────────────────────────────────────────
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",         -- main branch is the v1.0 rewrite; setup() API lives on master
     build = ":TSUpdate",
     opts = {
       ensure_installed = {
