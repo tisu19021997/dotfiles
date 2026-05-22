@@ -112,36 +112,41 @@ require("lazy").setup({
     end,
   },
 
-  -- ─── LSP (Mason auto-installs servers; lspconfig wires them up) ───────────
+  -- ─── LSP (nvim 0.11+ native vim.lsp.config API) ───────────────────────────
+  -- Mason installs server binaries; mason-lspconfig's automatic_enable wires
+  -- each installed server into vim.lsp.enable() under the hood. No more
+  -- require("lspconfig")[name].setup() (deprecated, removed in v3.0.0).
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "williamboman/mason.nvim", opts = {} },
       { "williamboman/mason-lspconfig.nvim", opts = {
           ensure_installed = { "lua_ls", "pyright", "ts_ls", "bashls", "gopls", "rust_analyzer" },
+          automatic_enable = true,
       } },
     },
     config = function()
-      local lspconfig = require("lspconfig")
+      -- Global capabilities (augment with cmp if present) — applies to all servers
       local caps = vim.lsp.protocol.make_client_capabilities()
       local ok, cmp = pcall(require, "cmp_nvim_lsp")
       if ok then caps = cmp.default_capabilities(caps) end
+      vim.lsp.config("*", { capabilities = caps })
 
-      local on_attach = function(_, buf)
-        local m = function(k, fn, d) vim.keymap.set("n", k, fn, { buffer = buf, desc = d }) end
-        m("gd", vim.lsp.buf.definition, "Go to definition")
-        m("gr", vim.lsp.buf.references, "References")
-        m("gi", vim.lsp.buf.implementation, "Implementation")
-        m("K",  vim.lsp.buf.hover, "Hover")
-        m("<leader>rn", vim.lsp.buf.rename, "Rename")
-        m("<leader>ca", vim.lsp.buf.code_action, "Code action")
-        m("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
-        m("]d", vim.diagnostic.goto_next, "Next diagnostic")
-      end
-
-      for _, s in ipairs({ "lua_ls", "pyright", "ts_ls", "bashls", "gopls", "rust_analyzer" }) do
-        lspconfig[s].setup({ capabilities = caps, on_attach = on_attach })
-      end
+      -- Buffer-local LSP keymaps, set when a server actually attaches
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local buf = args.buf
+          local m = function(k, fn, d) vim.keymap.set("n", k, fn, { buffer = buf, desc = d }) end
+          m("gd", vim.lsp.buf.definition, "Go to definition")
+          m("gr", vim.lsp.buf.references, "References")
+          m("gi", vim.lsp.buf.implementation, "Implementation")
+          m("K",  vim.lsp.buf.hover, "Hover")
+          m("<leader>rn", vim.lsp.buf.rename, "Rename")
+          m("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          m("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
+          m("]d", vim.diagnostic.goto_next, "Next diagnostic")
+        end,
+      })
     end,
   },
 
