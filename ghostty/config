@@ -79,6 +79,9 @@ keybind = super+shift+down=text:\x02j
 keybind = super+shift+up=text:\x02k
 keybind = super+shift+right=text:\x02l
 
+# Cmd+J → tmux session picker (sends prefix + Ctrl-j → choose-tree -Zs)
+keybind = super+j=text:\x02\n
+
 # Cmd+1..9 → tmux select-window N (sends prefix + N).
 # Overrides Ghostty's native tab switching — we live in tmux, not Ghostty tabs.
 keybind = super+one=text:\x021
