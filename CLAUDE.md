@@ -24,7 +24,6 @@ Configs are **symlinked into `~/.config/`** by `install.sh`. Editing a file in t
 - **Don't change the tmux prefix from `Ctrl-b`.** Ghostty's `keybind = super+shift+left=text:\x02h` literally sends `0x02` (= `Ctrl-b`). Changing the prefix silently breaks `Cmd+Shift+Arrow` pane navigation.
 - **The Flexoki palette hex values are duplicated** across `ghostty/config`, `tmux/tmux.conf` (as `%hidden` vars), and the nvim theme plugin. When tweaking colors, update all three.
 - **`nvim/lazy-lock.json` is committed on purpose** — it pins plugin versions so a fresh clone reproduces. Do not `.gitignore` it.
-- **Remote push uses HTTPS via `gh` credentials** (account `tisu19021997`), not SSH — SSH on this machine maps to a different GitHub identity. Don't `git remote set-url` to SSH without re-checking.
 
 ## Pointers
 - User overview & keymap cheatsheet: @README.md

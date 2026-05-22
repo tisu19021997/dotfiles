@@ -7,7 +7,7 @@ keyboard-driven work and running Claude in several panes/tabs at once.
 ## Install
 
 ```bash
-git clone <this-repo> ~/dotfiles
+git clone git@github.com:tisu19021997/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
