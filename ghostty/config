@@ -79,6 +79,18 @@ keybind = super+shift+down=text:\x02j
 keybind = super+shift+up=text:\x02k
 keybind = super+shift+right=text:\x02l
 
+# Cmd+1..9 → tmux select-window N (sends prefix + N).
+# Overrides Ghostty's native tab switching — we live in tmux, not Ghostty tabs.
+keybind = super+one=text:\x021
+keybind = super+two=text:\x022
+keybind = super+three=text:\x023
+keybind = super+four=text:\x024
+keybind = super+five=text:\x025
+keybind = super+six=text:\x026
+keybind = super+seven=text:\x027
+keybind = super+eight=text:\x028
+keybind = super+nine=text:\x029
+
 # Quick reload
 keybind = super+shift+r=reload_config
 
