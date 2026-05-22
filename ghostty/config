@@ -68,8 +68,9 @@ keybind = super+shift+left_bracket=previous_tab
 keybind = super+shift+right_bracket=next_tab
 
 # Splits (we mostly do this inside tmux, but available natively too)
-keybind = super+d=new_split:right
-keybind = super+shift+d=new_split:down
+# Cmd+D is taken by macOS (Show Desktop) — use Cmd+Ctrl+D / Cmd+Ctrl+Shift+D
+keybind = super+ctrl+d=new_split:right
+keybind = super+ctrl+shift+d=new_split:down
 
 # Cmd+Shift+Arrow → send tmux prefix (Ctrl-b = 0x02) + h/j/k/l
 # tmux config binds these to select-pane -L/D/U/R

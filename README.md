@@ -53,7 +53,7 @@ dotfiles/
 | `Cmd+1..9`            | Jump to tab                     |
 | `Cmd+Shift+[` / `]`   | Prev / next tab                 |
 | `Cmd+Shift+Arrows`    | **Move between tmux panes** (sends tmux prefix + h/j/k/l) |
-| `Cmd+D` / `Cmd+Shift+D` | Native split right / down (rarely needed — use tmux) |
+| `Cmd+Ctrl+D` / `Cmd+Ctrl+Shift+D` | Native split right / down (rarely needed — use tmux) |
 | `Cmd+Shift+R`         | Reload Ghostty config           |
 | `Cmd+ +/-/0`          | Font bigger / smaller / reset   |
 
